@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorador de Archivos</title>
+    <style>
+        :root{
+            color-scheme: light dark;
+        }
+        a{
+            color: #99c3ff;
+            text-decoration-line: none;
+        }
+        
+        a:hover{
+            text-decoration-line: underline;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        
+        h1 {
+            font-size: 24px;
+        }
+        
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        li {
+            margin: 5px 0;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Explorador de Archivos</h1>
+    <p>Directorio actual: <%= currentPath %></p>
+
+    <% if (currentPath !== '') { %>
+        <p><a href="/?path=<%= path.dirname(currentPath) %>">Volver al directorio superior</a></p>
+    <% } %>
+
+    <ul>
+        <% files.forEach(file => { %>
+            <% if (file.isDirectory) { %>
+                <li><a href="/?path=<%= file.path %>">[Carpeta] <%= file.name %></a></li>
+            <% } else { %>
+                <li><a href="/download/?path=<%= file.path %>"> <%= file.name %></a></li>
+            <% } %>
+        <% }) %>
+    </ul>
+
+    <input type="file" name="fileInput">
+
+    <script>
+        var $ = ($) => {return document.querySelector($)}
+        const $fileInput = $("[name='fileInput']")
+        $fileInput.addEventListener('change', procesar)
+
+        function procesar(e) {
+            var file = e.target.files[0]
+
+            if (file) {
+                fetch('/upload?path=<%= currentPath  %>', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': file.type,
+                        'Content-Disposition': `attachment; filename=${file.name}`
+                    },
+                    body: file
+                })
+                .then(response => response.text())
+            }
+        }
+
+    </script>
+</body>
+</html>
