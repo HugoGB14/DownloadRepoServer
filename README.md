@@ -9,6 +9,7 @@ To start the packages, use:
 npm install
 ```
 ### Start the server
+You must first create the 'download' directory
 
 To start the server, use:
 ```bash
