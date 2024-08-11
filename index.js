@@ -5,7 +5,7 @@ import bodyParser from 'body-parser'
 import multer from 'multer'
 const app = express()
 const downloadDir = path.join('.', 'download')
-app.use('/upload', bodyParser.raw({ type: '*/*' }))
+app.use('/upload', express.raw({ type: '*/*', limit: '250mb' }))
 app.use('/mkdir', express.urlencoded({ extended: false }))
 app.set('view engine', 'ejs')
 
