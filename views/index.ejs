@@ -53,7 +53,7 @@
             <% } %>
         <% }) %>
     </ul>
-
+    <h2>Subir archivo</h2>
     <input type="file" name="fileInput">
 
     <script>
@@ -73,8 +73,20 @@
                 })
                 .then(response => response.text())
             }
+            location.reload()
         }
 
     </script>
+
+    <br>
+    <br>
+
+    <h2>Crear carpeta</h2>
+
+    <form action="/mkdir" method="post" name="dir">
+        <input type="text" name="name">
+        <input type="text" hidden name="curdir" value="<%= currentPath %>">
+        <button type="submit">Crear</button>
+    </form>
 </body>
 </html>
