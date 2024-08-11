@@ -63,13 +63,11 @@
 
         function procesar(e) {
             var file = e.target.files[0]
-
             if (file) {
-                fetch('/upload?path=<%= currentPath  %>', {
+                fetch('/upload?path=<%= currentPath %>' + '/' + file.name, {
                     method: 'POST',
                     headers: {
                         'Content-Type': file.type,
-                        'Content-Disposition': `attachment; filename=${file.name}`
                     },
                     body: file
                 })

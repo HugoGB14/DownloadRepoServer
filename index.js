@@ -43,8 +43,7 @@ app.get('/download', (req, res) => {
 app.post('/upload', (req, res) => {
     const filePath = path.join(downloadDir, req.query.path)
     const fileBuffer = req.body
-    const fileName = req.headers['content-disposition'].split('filename=')[1]
-    fs.writeFile(path.join(filePath, fileName), fileBuffer, (err) => {
+    fs.writeFile(filePath, fileBuffer, (err) => {
         if (err) {
             console.error(err)
             return res.status(500).send('Error: ' + err)
