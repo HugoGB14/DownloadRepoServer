@@ -1,8 +1,6 @@
 import express from 'express'
 import path from 'node:path'
 import fs from 'node:fs'
-import bodyParser from 'body-parser'
-import multer from 'multer'
 const app = express()
 const downloadDir = path.join('.', 'download')
 app.use('/upload', express.raw({ type: '*/*', limit: '250mb' }))
@@ -60,7 +58,7 @@ app.post('/mkdir',(req, res) => {
             console.error(err)
             return res.status(500).send('Error: ' + err)
         }
-        res.status(200).redirect('/path?' + req.body.curdir)
+        res.status(200).redirect('/?path=' + req.body.curdir)
     });
 })
 
